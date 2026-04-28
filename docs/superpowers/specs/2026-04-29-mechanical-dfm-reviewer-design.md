@@ -190,6 +190,8 @@ These packs are advisory mechanical review prompts. They are not certification d
 
 Provide a modular provider interface for AI calls.
 
+Assume OpenAI is the initial provider for the prototype. The implementation should still keep OpenAI-specific request/response handling behind the adapter boundary so a future cloud or local provider can be substituted without rewriting the review workflow.
+
 Responsibilities:
 
 - Interpret drawing notes and callouts.
@@ -375,7 +377,6 @@ The first prototype is useful if, after one real drawing review:
 
 - Exact OCR engine and local installation assumptions.
 - Whether the first web UI uses built-in NiceGUI image interaction or a small custom browser component for crop selection.
-- Exact AI provider and model configuration.
+- Exact OpenAI model configuration and fallback behavior.
 - Whether review state is YAML or JSON for the first pass.
 - How soon to introduce SQLite indexing.
-
