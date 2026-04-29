@@ -48,12 +48,14 @@ Use `uv` and the project-local virtual environment.
 From the implementation worktree:
 
 ```powershell
+$env:UV_CACHE_DIR = "$PWD\.uv-cache"
+New-Item -ItemType Directory -Force .uv-cache, .test-tmp | Out-Null
 uv sync --extra dev
-uv run pytest -p no:cacheprovider
-uv run ruff check .
+uv run pytest
+uv run ruff check src tests
 ```
 
-Use `-p no:cacheprovider` with pytest to avoid local pytest cache permission issues seen earlier.
+The project config disables pytest's cache provider. Tests override pytest's built-in `tmp_path` fixture to use `.test-tmp/` inside the worktree because Windows ACLs caused permission failures with pytest's default temp factory. Keep uv's package cache inside the worktree with `UV_CACHE_DIR`. Do not force `TEMP` or `TMP` into the worktree on Windows unless you have verified the directory permissions.
 
 ## Development Workflow
 
@@ -75,9 +77,11 @@ Do not skip review of Task 4. The current checkpoint says Task 4 implementation 
 Common commands from the implementation worktree:
 
 ```powershell
-uv run pytest tests/test_pdf_processing.py -v -p no:cacheprovider
-uv run pytest -p no:cacheprovider
-uv run ruff check .
+$env:UV_CACHE_DIR = "$PWD\.uv-cache"
+New-Item -ItemType Directory -Force .uv-cache, .test-tmp | Out-Null
+uv run pytest tests/test_pdf_processing.py -v
+uv run pytest
+uv run ruff check src tests
 git status --short
 ```
 
@@ -119,10 +123,10 @@ A generated directory named similar to this may exist in the MVP worktree:
 pytest-cache-files-u3x6blsf/
 ```
 
-It was previously undeletable due local permission behavior and is ignored. Do not rely on it. Avoid recreating pytest cache issues by using:
+It was previously undeletable due local permission behavior and is ignored. Do not rely on it. The project disables pytest's cache provider in `pyproject.toml`. Keep uv's package cache local to the worktree by setting:
 
 ```powershell
-uv run pytest -p no:cacheprovider
+$env:UV_CACHE_DIR = "$PWD\.uv-cache"
 ```
 
 ## Model-Agnostic Handoff
@@ -136,4 +140,3 @@ This project does not require Codex to continue development. A future AI develop
 5. Resume from the next remaining task.
 
 The app may initially call OpenAI, but the development workflow can be performed by Codex, Claude, Gemini, or another capable coding agent.
-

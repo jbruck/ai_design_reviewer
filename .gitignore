@@ -1,2 +1,6 @@
 .worktrees
 .worktrees/
+.uv-cache/
+.tmp/
+.test-tmp/
+pytest_tmp*/
