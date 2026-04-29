@@ -35,10 +35,12 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = "-p no:cacheprovider"
 
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+extend-exclude = [".tmp", ".uv-cache", ".test-tmp", "pytest-cache-files-*", "pytest_tmp*"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]

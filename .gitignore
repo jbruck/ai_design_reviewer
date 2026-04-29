@@ -1,10 +1,14 @@
 .worktrees
 .worktrees/
 .venv/
+.uv-cache/
+.tmp/
+.test-tmp/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 pytest-cache-files-*/
+pytest_tmp*/
 .ruff_cache/
 reviews/
 dist/
