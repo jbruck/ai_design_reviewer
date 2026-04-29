@@ -13,15 +13,13 @@ Local Python-first workbench for mechanical DFM review of drawing PDFs.
 ## Development
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -e .[dev]
-pytest
+uv sync --extra dev
+uv run pytest
 ```
 
 ## Run
 
 ```powershell
-dfm-reviewer --help
-python -m dfm_reviewer.web
+uv run dfm-reviewer --help
+uv run python -m dfm_reviewer.web
 ```
