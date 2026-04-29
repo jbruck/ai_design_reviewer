@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mechanical-dfm-reviewer"
+version = "0.1.0"
+description = "Local mechanical DFM review workbench for drawing PDFs"
+requires-python = ">=3.11"
+dependencies = [
+  "nicegui>=1.4.35",
+  "openai>=1.30.0",
+  "pillow>=10.0.0",
+  "pydantic>=2.7.0",
+  "pymupdf>=1.24.0",
+  "pyyaml>=6.0.1",
+  "rich>=13.7.0",
+  "typer>=0.12.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2.0",
+  "pytest-cov>=5.0.0",
+  "reportlab>=4.2.0",
+  "ruff>=0.4.0",
+]
+
+[project.scripts]
+dfm-reviewer = "dfm_reviewer.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
