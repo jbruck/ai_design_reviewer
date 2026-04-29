@@ -1,7 +1,7 @@
 from enum import StrEnum
 from pathlib import Path
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class ManufacturingRoute(StrEnum):
@@ -73,15 +73,25 @@ class StakeholderNeed(BaseModel):
 class EvidenceAnchor(BaseModel):
     evidence_id: str
     source_pdf: Path
-    page_number: int
+    page_number: int = Field(ge=1)
     page_image_path: Path
     crop_image_path: Path
-    region: list[int]
+    region: list[int] = Field(min_length=4, max_length=4)
     extracted_text: str = ""
     linked_requirement_id: str | None = None
     linked_finding_id: str | None = None
     confidence: Confidence = Confidence.MEDIUM
     reviewer_note: str = ""
+
+    @field_validator("region")
+    @classmethod
+    def validate_region_ordering(cls, region: list[int]) -> list[int]:
+        left, top, right, bottom = region
+        if left >= right:
+            raise ValueError("region left coordinate must be less than right coordinate")
+        if top >= bottom:
+            raise ValueError("region top coordinate must be less than bottom coordinate")
+        return region
 
 
 class Finding(BaseModel):

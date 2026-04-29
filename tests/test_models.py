@@ -1,5 +1,8 @@
 from pathlib import Path
 
+import pytest
+from pydantic import ValidationError
+
 from dfm_reviewer.models import (
     CertificationStatus,
     Confidence,
@@ -48,6 +51,42 @@ def test_evidence_anchor_keeps_auditable_source_region() -> None:
     assert anchor.region == [10, 20, 110, 220]
     assert anchor.linked_requirement_id == "REQ-001"
     assert anchor.linked_finding_id is None
+
+
+def test_evidence_anchor_rejects_invalid_page_number() -> None:
+    with pytest.raises(ValidationError):
+        EvidenceAnchor(
+            evidence_id="EV-001",
+            source_pdf=Path("source/drawing.pdf"),
+            page_number=0,
+            page_image_path=Path("pages/page-001.png"),
+            crop_image_path=Path("evidence/EV-001.png"),
+            region=[10, 20, 110, 220],
+        )
+
+
+def test_evidence_anchor_rejects_wrong_region_length() -> None:
+    with pytest.raises(ValidationError):
+        EvidenceAnchor(
+            evidence_id="EV-001",
+            source_pdf=Path("source/drawing.pdf"),
+            page_number=1,
+            page_image_path=Path("pages/page-001.png"),
+            crop_image_path=Path("evidence/EV-001.png"),
+            region=[1, 2, 3],
+        )
+
+
+def test_evidence_anchor_rejects_invalid_region_ordering() -> None:
+    with pytest.raises(ValidationError):
+        EvidenceAnchor(
+            evidence_id="EV-001",
+            source_pdf=Path("source/drawing.pdf"),
+            page_number=1,
+            page_image_path=Path("pages/page-001.png"),
+            crop_image_path=Path("evidence/EV-001.png"),
+            region=[110, 20, 10, 220],
+        )
 
 
 def test_finding_status_records_uncertainty() -> None:
