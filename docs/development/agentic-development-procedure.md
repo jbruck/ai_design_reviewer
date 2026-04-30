@@ -6,7 +6,7 @@ This procedure defines how AI development agents and human engineers continue th
 
 ## Governing Principle
 
-Every commit must be resumable from a fresh session.
+The repository must remain resumable from a fresh session without creating low-value documentation churn.
 
 A new agent should be able to read the repository files, inspect git history, run verification commands, and continue development without access to previous chat context.
 
@@ -62,17 +62,17 @@ For each implementation task:
 4. Implement the smallest useful change.
 5. Run targeted tests.
 6. Run full tests and lint.
-7. Update the checkpoint.
-8. Commit code, tests, and checkpoint together.
+7. Update the checkpoint if plan progress, verification status, next action, or risks changed.
+8. Commit code, tests, and any useful checkpoint update together.
 9. Perform or request a spec compliance review.
 10. Perform or request a code quality review.
 11. Fix review findings before moving to the next task.
 
 ## Checkpoint Standard
 
-Update the current checkpoint before every commit that changes project state.
+Update the current checkpoint before commits that change the project state in a way a fresh agent would need to know.
 
-The checkpoint must include:
+When updated, the checkpoint must include:
 
 - Current objective.
 - Completed work since the previous checkpoint.
@@ -85,7 +85,7 @@ The checkpoint must include:
 
 Use `docs/development/checkpoint-template.md` as the format reference.
 
-If a commit is purely administrative and does not materially change implementation progress, still record that fact in the checkpoint unless the commit itself is a checkpoint-only update.
+If a commit is purely administrative or very small and does not materially change implementation progress, verification status, the next action, or risks, do not rewrite the checkpoint.
 
 ## Platform-Agnostic Orchestration
 
@@ -97,7 +97,7 @@ The preferred orchestration is:
   - Spec compliance review.
   - Code quality review.
 - Small commits.
-- Checkpoint updates before every commit.
+- Checkpoint updates when state changes materially.
 
 This can be performed by:
 
@@ -139,7 +139,7 @@ chore: keep test tooling project-local
 docs: update MVP checkpoint
 ```
 
-Each commit should include the checkpoint update unless the commit exists only to repair the checkpoint.
+Commits that materially change implementation state should include the checkpoint update. Trivial edits may skip checkpoint updates to preserve signal.
 
 ## Prohibited Shortcuts
 
@@ -159,4 +159,3 @@ A fresh agent should:
 4. Change into the MVP worktree.
 5. Run the standard verification commands.
 6. Continue from the checkpoint's next action.
-

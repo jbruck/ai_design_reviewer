@@ -2,7 +2,7 @@
 
 This repository should be easy to continue with Codex, Claude, Gemini, or a human engineer. Treat the files in `docs/superpowers/` as project documentation, not as a Codex-only workflow.
 
-All development agents must keep the repo resumable from every commit. Before each commit, update the current checkpoint so a fresh agent session can continue without reading prior chat history.
+Development agents must keep the repo resumable while staying concise. Update the checkpoint when a commit changes the plan state, next action, verification status, risks, or implementation behavior. Do not rewrite checkpoints for trivial edits that do not alter the state of play.
 
 ## Project
 
@@ -71,11 +71,11 @@ For each task:
 2. Run the targeted test and confirm it fails for the expected reason.
 3. Implement the smallest useful change.
 4. Run the targeted test, full test suite, and ruff.
-5. Update the current checkpoint with completed work, verification evidence, remaining plan, and the exact next action.
-6. Commit the task and checkpoint together with a concise message.
+5. Update the current checkpoint if the change affects plan progress, verification evidence, remaining work, next action, or risks.
+6. Commit the task with a concise message.
 7. Review for both spec compliance and code quality before moving to the next task.
 
-Every commit must leave enough written state for a new development agent to resume. If a task commit does not change the checkpoint, the agent must explain why in the commit message or add a separate checkpoint-only commit immediately after.
+Every meaningful implementation commit must leave enough written state for a new development agent to resume. Small commits that do not change the overall state of play do not need checkpoint churn.
 
 Do not skip review of Task 4. The current checkpoint says Task 4 implementation is committed but not yet reviewed.
 
@@ -119,7 +119,7 @@ uv run python -m dfm_reviewer.web
 - Do not revert user changes unless explicitly asked.
 - Do not use destructive commands such as `git reset --hard` or checkout-based file reverts without explicit permission.
 - Commit small, coherent steps.
-- Include checkpoint updates in commits so progress against the plan is recoverable.
+- Include checkpoint updates when progress against the plan, verification status, next action, or risks change.
 - Keep generated review artefacts under `reviews/`, which is ignored.
 - `.worktrees/` is ignored and should remain ignored.
 

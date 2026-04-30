@@ -33,7 +33,8 @@ Completed and committed on `main`:
   - `AGENTS.md`
   - `docs/development/agentic-development-procedure.md`
   - `docs/development/checkpoint-template.md`
-  - Every future commit should update the checkpoint so a fresh development agent can resume from repository state alone.
+  - Meaningful implementation commits should update the checkpoint so a fresh development agent can resume from repository state alone.
+  - Trivial commits that do not change plan progress, verification status, next action, or risks should not rewrite the checkpoint.
 
 Implementation worktree:
 
@@ -141,8 +142,9 @@ Relevant generated/local directories:
   - Spec compliance review.
   - Code quality review.
 - Keep the repo resumable from every commit:
-  - Update the current checkpoint before each commit that changes project state.
-  - Commit code/tests/docs and checkpoint changes together where practical.
+  - Update the current checkpoint when a commit changes plan progress, verification status, next action, or risks.
+  - Commit code/tests/docs and checkpoint changes together where useful.
+  - Avoid low-value checkpoint churn for trivial edits.
   - Use `docs/development/checkpoint-template.md` as the platform-agnostic checkpoint format.
 - Use project-local `uv` environment rather than user-level pip scripts.
 - Use `uv run ...` commands for tests/lint/CLI.
