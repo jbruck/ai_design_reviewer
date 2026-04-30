@@ -29,6 +29,11 @@ Completed and committed on `main`:
 - Worktree ignore:
   - `.gitignore`
   - `b19d08e chore: ignore local worktrees`
+- Agent handoff and checkpoint policy:
+  - `AGENTS.md`
+  - `docs/development/agentic-development-procedure.md`
+  - `docs/development/checkpoint-template.md`
+  - Every future commit should update the checkpoint so a fresh development agent can resume from repository state alone.
 
 Implementation worktree:
 
@@ -81,6 +86,9 @@ Main repo:
 Important files:
 
 - `.gitignore`
+- `AGENTS.md`
+- `docs/development/agentic-development-procedure.md`
+- `docs/development/checkpoint-template.md`
 - `docs/superpowers/specs/2026-04-29-mechanical-dfm-reviewer-design.md`
 - `docs/superpowers/plans/2026-04-29-mechanical-dfm-reviewer-mvp.md`
 - `docs/superpowers/checkpoints/2026-04-29-mechanical-dfm-reviewer-mvp-checkpoint.md`
@@ -132,6 +140,10 @@ Relevant generated/local directories:
   - One task at a time.
   - Spec compliance review.
   - Code quality review.
+- Keep the repo resumable from every commit:
+  - Update the current checkpoint before each commit that changes project state.
+  - Commit code/tests/docs and checkpoint changes together where practical.
+  - Use `docs/development/checkpoint-template.md` as the platform-agnostic checkpoint format.
 - Use project-local `uv` environment rather than user-level pip scripts.
 - Use `uv run ...` commands for tests/lint/CLI.
 - Use `-p no:cacheprovider` for pytest where helpful to avoid cache permission issues.
@@ -212,4 +224,3 @@ After that, perform or request the Task 4 spec and code-quality reviews.
 - NiceGUI web app is currently only a stub until Task 10.
 - CLI is currently only a stub until Task 7.
 - No real OCR implemented yet; Task 4 only handles embedded text.
-
