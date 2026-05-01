@@ -58,6 +58,7 @@ Completed and reviewed:
   - Review gates passed.
 - Task 4 PDF Rendering/Text/Cropping
   - `a847882 feat: add PDF rendering and cropping`
+  - `2e0c7a4 fix: validate evidence crop bounds`
   - Spec compliance review passed.
   - Code quality review found missing crop-bound validation.
   - Crop validation fix added:
@@ -69,6 +70,27 @@ Completed and reviewed:
     - `uv run --no-sync pytest tests/test_pdf_processing.py -v` -> `7 passed`
     - `uv run --no-sync pytest` -> `17 passed`
     - `uv run --no-sync ruff check src tests` -> passed
+- Task 5 Markdown Report Generation
+  - Included in commit with this checkpoint update: `feat: add markdown report generation`
+  - Added `src/dfm_reviewer/reporting.py`.
+  - Added `tests/test_reporting.py`.
+  - TDD evidence:
+    - Initial red: `uv run pytest tests/test_reporting.py -v -p no:cacheprovider` failed with `ModuleNotFoundError: No module named 'dfm_reviewer.reporting'`.
+    - Review-driven red checks failed for missing evidence provenance/OCR status and Markdown escaping behavior before fixes.
+  - Implemented:
+    - `render_markdown_report(review)` for all MVP report sections.
+    - `write_markdown_report(review, reports_dir)` writing `mechanical-dfm-review.md`.
+    - Evidence table with source PDF, page number, page image path, crop path, crop region, linked requirement/finding, confidence, and note.
+    - IECEx advisory guardrail stating the report is not a certification determination.
+    - Appendix sections for extracted title block, drawing notes, OCR status, and OCR text/status.
+    - Markdown table-cell escaping for pipe/newline content.
+    - Dynamic code fences for extracted text containing backticks.
+  - Spec compliance review passed after fixes.
+  - Code quality review passed after Markdown robustness fixes.
+  - Verification:
+    - `uv run pytest tests/test_reporting.py -v -p no:cacheprovider` -> `4 passed`
+    - `uv run pytest -p no:cacheprovider` -> `19 passed`
+    - `uv run ruff check .` -> passed
 
 Partially complete:
 
@@ -76,7 +98,6 @@ Partially complete:
 
 Not started:
 
-- Task 5 Markdown report generation.
 - Task 6 Editable review packs.
 - Task 7 CLI vertical slice.
 - Task 8 AI adapter boundary.
@@ -116,6 +137,7 @@ Created/modified in worktree:
 - `src/dfm_reviewer/models.py`
 - `src/dfm_reviewer/storage.py`
 - `src/dfm_reviewer/pdf_processing.py`
+- `src/dfm_reviewer/reporting.py`
 - `AGENTS.md`
 - `docs/development/agentic-development-procedure.md`
 - `docs/development/checkpoint-template.md`
@@ -124,6 +146,7 @@ Created/modified in worktree:
 - `tests/test_models.py`
 - `tests/test_storage.py`
 - `tests/test_pdf_processing.py`
+- `tests/test_reporting.py`
 - `tests/.gitkeep`
 
 Relevant generated/local directories:
@@ -166,41 +189,38 @@ Relevant generated/local directories:
   - page number >= 1
   - region length exactly 4
   - valid coordinate ordering: left < right and top < bottom
-- Task 4 crop-bound validation has been fixed and verified. Commit is pending at this checkpoint update.
+- Task 4 crop-bound validation has been fixed, verified, reviewed, and committed.
+- Markdown reports normalize local paths with POSIX-style separators for Markdown portability on Windows.
+- Markdown report table cells escape pipe/newline content; extracted text uses dynamic code fences.
 
 ## 6. Remaining Plan
 
-1. Commit Task 4 crop-bound validation fix with this checkpoint update.
-2. Start Task 5: Markdown report generation.
-   - Add `src/dfm_reviewer/reporting.py`.
-   - Add `tests/test_reporting.py`.
-   - TDD, test, lint, commit, review gates.
-3. Task 6: Editable review packs.
+1. Task 6: Editable review packs.
    - Add `src/dfm_reviewer/review_packs.py`.
    - Add starter YAML packs under `review_packs/manufacturing/` and `review_packs/iecex/`.
    - Add tests, commit, review gates.
-4. Task 7: CLI vertical slice.
+2. Task 7: CLI vertical slice.
    - Replace/extend CLI stub.
    - Create review from PDF, render pages, extract text, save review, generate report.
    - Add CLI tests, commit, review gates.
-5. Task 8: AI adapter boundary.
+3. Task 8: AI adapter boundary.
    - Add `src/dfm_reviewer/ai.py`.
    - Add disabled provider test.
    - Commit, review gates.
-6. Task 9: Folder watcher inbox scaffolding.
+4. Task 9: Folder watcher inbox scaffolding.
    - Add `src/dfm_reviewer/watcher.py`.
    - Add tests for recursive PDF discovery.
    - Commit, review gates.
-7. Task 10: Minimal NiceGUI web app.
+5. Task 10: Minimal NiceGUI web app.
    - Replace/extend web stub.
    - Path input, intake fields, create review, render pages, generate report.
    - Manual run check.
    - Commit, review gates.
-8. Task 11: Full verification.
+6. Task 11: Full verification.
    - Run full tests and ruff.
    - Update README with final MVP commands.
    - Commit.
-9. Final full review and completion/merge guidance.
+7. Final full review and completion/merge guidance.
 
 ## 7. Next Action
 
@@ -208,19 +228,19 @@ Run this in the implementation worktree:
 
 ```powershell
 cd C:\Users\jonathan.b\ai\ai_design_reviewer\.worktrees\mvp
-git add src/dfm_reviewer/pdf_processing.py tests/test_pdf_processing.py AGENTS.md docs/development/agentic-development-procedure.md docs/development/checkpoint-template.md docs/superpowers/checkpoints/2026-04-29-mechanical-dfm-reviewer-mvp-checkpoint.md
-git commit -m "fix: validate evidence crop bounds"
+git add src/dfm_reviewer/reporting.py tests/test_reporting.py docs/superpowers/checkpoints/2026-04-29-mechanical-dfm-reviewer-mvp-checkpoint.md
+git commit -m "feat: add markdown report generation"
 ```
 
-After that, start Task 5 from the implementation plan.
+After that, start Task 6 from the implementation plan.
 
 ## 8. Risks And Uncertainties
 
 - Git metadata writes may still require approval under workspace-write permissions.
-- `uv run` without `--no-sync` may try to rebuild the editable package in `.uv-cache` and hit Windows ACL issues. Prefer `uv run --no-sync` after `uv sync --extra dev` has already succeeded.
-- Task 4 has not had a second code-quality re-review after the crop-bound validation fix yet. It should be quickly re-reviewed after commit or before moving far into Task 5.
 - `pytest-cache-files-u3x6blsf/` remains present and undeletable, but ignored.
 - Python 3.14 is newer than many packages traditionally target; current tests pass, but watch dependency compatibility.
 - NiceGUI web app is currently only a stub until Task 10.
 - CLI is currently only a stub until Task 7.
 - No real OCR implemented yet; Task 4 only handles embedded text.
+- Task 5 records OCR status explicitly, but no separate OCR engine has been implemented.
+- Markdown report prose fields outside tables intentionally remain normal Markdown; arbitrary extracted text in non-code/non-table prose could affect presentation if future fields are added without formatting helpers.
