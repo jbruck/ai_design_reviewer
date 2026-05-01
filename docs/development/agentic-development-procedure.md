@@ -27,7 +27,7 @@ The `docs/superpowers/` path is historical. Its contents are project records and
 Continue MVP implementation in:
 
 ```text
-C:\Users\jonathan.b\ai\ai_design_reviewer\.worktrees\mvp
+.worktrees/mvp
 ```
 
 On branch:

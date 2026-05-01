@@ -34,7 +34,7 @@ The checkpoint is the fastest way to resume after a context switch.
 Implementation work is happening in a git worktree:
 
 ```text
-C:\Users\jonathan.b\ai\ai_design_reviewer\.worktrees\mvp
+.worktrees/mvp
 ```
 
 Branch:
