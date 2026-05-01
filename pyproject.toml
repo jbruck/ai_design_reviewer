@@ -44,3 +44,4 @@ extend-exclude = [".tmp", ".uv-cache", ".test-tmp", "pytest-cache-files-*", "pyt
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+ignore = ["B008"]
