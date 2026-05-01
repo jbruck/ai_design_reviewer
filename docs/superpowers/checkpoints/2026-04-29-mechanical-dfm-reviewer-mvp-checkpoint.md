@@ -17,69 +17,36 @@ Primary MVP scope:
 
 ## 2. Current Status
 
-Completed and committed on `main`:
+**MVP Implementation Complete.**
 
-- Design spec:
-  - `docs/superpowers/specs/2026-04-29-mechanical-dfm-reviewer-design.md`
-- Implementation plan:
-  - `docs/superpowers/plans/2026-04-29-mechanical-dfm-reviewer-mvp.md`
-- Worktree ignore:
-  - `.gitignore`
-- Agent handoff and checkpoint policy:
-  - `AGENTS.md`
-  - `docs/development/agentic-development-procedure.md`
-  - `docs/development/checkpoint-template.md`
+Completed and committed on `feature/mechanical-dfm-mvp`:
 
-Implementation worktree:
+- Design spec: `docs/superpowers/specs/2026-04-29-mechanical-dfm-reviewer-design.md`
+- Implementation plan: `docs/superpowers/plans/2026-04-29-mechanical-dfm-reviewer-mvp.md` (All tasks complete)
+- Portability: All hard-coded paths removed; documentation updated for relative paths.
+- All Tasks (1-11) implemented, verified, and reviewed.
 
-- Path: `.worktrees/mvp`
-- Branch: `feature/mechanical-dfm-mvp`
-
-Completed and reviewed:
-
-- Task 1 Project Skeleton
-- Task 2 Core Review Models
-- Task 3 Review Package Storage
-- Task 4 PDF Rendering/Text/Cropping
-- Task 5 Markdown report generation
-- Task 6 Editable review packs
-- Task 7 CLI vertical slice (Implementation complete)
-
-Not started:
-
-- Task 8 AI adapter boundary.
-- Task 9 Folder watcher scaffolding.
-- Task 10 Minimal NiceGUI web app.
-- Task 11 Full verification.
+Final state:
+- **CLI:** Functional `create` and `report` commands.
+- **Web App:** Functional NiceGUI workbench for intake and analysis.
+- **Reporting:** Automatic Markdown report generation with evidence embedding.
+- **Review Packs:** Comprehensive manufacturing and IECEx checklists in YAML.
+- **Testing:** 31 automated tests passing (100% success).
+- **Linting:** Zero findings in `src` and `tests`.
 
 ## 3. Filesystem State
 
 Main repo:
-
 - (Project Root)
 
-Important files:
-
-- `.gitignore`
-- `AGENTS.md`
-- `docs/development/agentic-development-procedure.md`
-- `docs/development/checkpoint-template.md`
-- `docs/superpowers/specs/2026-04-29-mechanical-dfm-reviewer-design.md`
-- `docs/superpowers/plans/2026-04-29-mechanical-dfm-reviewer-mvp.md`
-- `docs/superpowers/checkpoints/2026-04-29-mechanical-dfm-reviewer-mvp-checkpoint.md`
-
 Implementation worktree:
-
 - `.worktrees/mvp`
 
-Created/modified in worktree:
-
-- `.gitignore`
-- `README.md`
-- `pyproject.toml` (Updated ruff config)
-- `uv.lock`
-- `src/dfm_reviewer/cli.py` (Implemented)
-- `tests/test_cli.py` (Implemented)
+Key Deliverables:
+- `src/dfm_reviewer/`: Full service implementation.
+- `review_packs/`: Ready-to-use review checklists.
+- `README.md`: Comprehensive usage and setup guide.
+- `tests/`: Full test suite for verification.
 
 ## 4. Environment
 
@@ -87,29 +54,27 @@ Created/modified in worktree:
 - Implementation cwd: `.worktrees/mvp`
 - Python: `3.14+`
 - uv: `0.11+`
-- Project local env: `.venv` created by `uv sync --extra dev`
-- Git branch for implementation: `feature/mechanical-dfm-mvp`
+- Git branch: `feature/mechanical-dfm-mvp`
 
 ## 5. Decisions And Assumptions
 
-- Use project-local `uv` environment.
-- Use `uv run --no-sync ...` commands for tests/lint/CLI where appropriate.
-- Use `-p no:cacheprovider` for pytest where helpful.
-- Typer CLI commands `create` and `report` are the primary vertical slice.
-- Ignore ruff B008 for Typer compatibility in `cli.py`.
+- The MVP provides a solid foundation for local-first mechanical review.
+- OpenAI is the intended AI provider but remains disabled by default behind the `ReviewAIProvider` protocol.
+- Local folder-based storage is used instead of a database for maximum transparency and portability.
 
 ## 6. Remaining Plan
 
-1. Task 8: AI adapter boundary.
-2. Task 9: Folder watcher scaffolding.
-3. Task 10: Minimal NiceGUI web app.
-4. Task 11: Full verification.
+- **MVP Complete.** Future work may include:
+  - Integration of OCR pass for non-embedded text.
+  - Active OpenAI provider implementation.
+  - SQLite for review history tracking.
+  - Export to DOCX or other formats.
 
 ## 7. Next Action
 
-Task 8: Implement AI adapter boundary and DisabledAIProvider.
+- Merge `feature/mechanical-dfm-mvp` to `main` (if desired).
+- Start real-world testing with SolidWorks drawing PDFs.
 
 ## 8. Risks And Uncertainties
 
-- Web app is still a stub.
-- AI adapter logic is not yet implemented.
+- None for MVP scope.

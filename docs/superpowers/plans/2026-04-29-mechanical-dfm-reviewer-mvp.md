@@ -1,6 +1,6 @@
 # Mechanical DFM Reviewer MVP Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Build the first working local mechanical DFM review workbench: guided intake, review package storage, PDF rendering/cropping, Markdown report generation, CLI fallback, and a minimal NiceGUI interface.
 
@@ -45,7 +45,7 @@
 - Create: `README.md`
 - Create: `src/dfm_reviewer/__init__.py`
 
-- [ ] **Step 1: Create packaging and tool configuration**
+- [x] **Step 1: Create packaging and tool configuration**
 
 Create `pyproject.toml`:
 
@@ -150,19 +150,19 @@ Create `src/dfm_reviewer/__init__.py`:
 __version__ = "0.1.0"
 ```
 
-- [ ] **Step 2: Install dependencies**
+- [x] **Step 2: Install dependencies**
 
 Run: `python -m pip install -e .[dev]`
 
 Expected: editable package installs successfully.
 
-- [ ] **Step 3: Run initial verification**
+- [x] **Step 3: Run initial verification**
 
 Run: `pytest`
 
 Expected: pytest reports no tests collected or passes once later tests exist.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 Run:
 
@@ -179,7 +179,7 @@ git commit -m "chore: scaffold Python project"
 - Create: `src/dfm_reviewer/models.py`
 - Create: `tests/test_models.py`
 
-- [ ] **Step 1: Write failing model tests**
+- [x] **Step 1: Write failing model tests**
 
 Create `tests/test_models.py`:
 
@@ -249,13 +249,13 @@ def test_finding_status_records_uncertainty() -> None:
     assert finding.confidence is Confidence.MEDIUM
 ```
 
-- [ ] **Step 2: Run model tests to verify failure**
+- [x] **Step 2: Run model tests to verify failure**
 
 Run: `pytest tests/test_models.py -v`
 
 Expected: FAIL with `ModuleNotFoundError` or missing model names.
 
-- [ ] **Step 3: Implement minimal models**
+- [x] **Step 3: Implement minimal models**
 
 Create `src/dfm_reviewer/models.py`:
 
@@ -387,13 +387,13 @@ class Review(BaseModel):
     extracted_notes_text: str = ""
 ```
 
-- [ ] **Step 4: Run model tests to verify pass**
+- [x] **Step 4: Run model tests to verify pass**
 
 Run: `pytest tests/test_models.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 Run:
 
@@ -410,7 +410,7 @@ git commit -m "feat: add review data models"
 - Create: `src/dfm_reviewer/storage.py`
 - Create: `tests/test_storage.py`
 
-- [ ] **Step 1: Write failing storage tests**
+- [x] **Step 1: Write failing storage tests**
 
 Create `tests/test_storage.py`:
 
@@ -463,13 +463,13 @@ def test_save_and_load_review_round_trip(tmp_path: Path) -> None:
     assert loaded.intake.manufacturing_routes == [ManufacturingRoute.FABRICATED_WELDED]
 ```
 
-- [ ] **Step 2: Run storage tests to verify failure**
+- [x] **Step 2: Run storage tests to verify failure**
 
 Run: `pytest tests/test_storage.py -v`
 
 Expected: FAIL with missing `dfm_reviewer.storage`.
 
-- [ ] **Step 3: Implement storage**
+- [x] **Step 3: Implement storage**
 
 Create `src/dfm_reviewer/storage.py`:
 
@@ -547,13 +547,13 @@ def load_review(path: Path) -> Review:
     return Review.model_validate(data)
 ```
 
-- [ ] **Step 4: Run storage tests to verify pass**
+- [x] **Step 4: Run storage tests to verify pass**
 
 Run: `pytest tests/test_storage.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 Run:
 
@@ -570,7 +570,7 @@ git commit -m "feat: add review package storage"
 - Create: `src/dfm_reviewer/pdf_processing.py`
 - Create: `tests/test_pdf_processing.py`
 
-- [ ] **Step 1: Write failing PDF processing tests**
+- [x] **Step 1: Write failing PDF processing tests**
 
 Create `tests/test_pdf_processing.py`:
 
@@ -622,13 +622,13 @@ def test_crop_region_writes_requested_rectangle(tmp_path: Path) -> None:
         assert cropped.size == (50, 50)
 ```
 
-- [ ] **Step 2: Run PDF tests to verify failure**
+- [x] **Step 2: Run PDF tests to verify failure**
 
 Run: `pytest tests/test_pdf_processing.py -v`
 
 Expected: FAIL with missing `dfm_reviewer.pdf_processing`.
 
-- [ ] **Step 3: Implement PDF processing**
+- [x] **Step 3: Implement PDF processing**
 
 Create `src/dfm_reviewer/pdf_processing.py`:
 
@@ -670,13 +670,13 @@ def crop_region(page_image_path: Path, crop_path: Path, region: list[int]) -> Pa
     return crop_path
 ```
 
-- [ ] **Step 4: Run PDF tests to verify pass**
+- [x] **Step 4: Run PDF tests to verify pass**
 
 Run: `pytest tests/test_pdf_processing.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 Run:
 
@@ -693,7 +693,7 @@ git commit -m "feat: add PDF rendering and cropping"
 - Create: `src/dfm_reviewer/reporting.py`
 - Create: `tests/test_reporting.py`
 
-- [ ] **Step 1: Write failing report tests**
+- [x] **Step 1: Write failing report tests**
 
 Create `tests/test_reporting.py`:
 
@@ -770,13 +770,13 @@ def test_write_markdown_report_creates_file(tmp_path: Path) -> None:
     assert "Mounting Bracket" in output.read_text(encoding="utf-8")
 ```
 
-- [ ] **Step 2: Run report tests to verify failure**
+- [x] **Step 2: Run report tests to verify failure**
 
 Run: `pytest tests/test_reporting.py -v`
 
 Expected: FAIL with missing `dfm_reviewer.reporting`.
 
-- [ ] **Step 3: Implement report generation**
+- [x] **Step 3: Implement report generation**
 
 Create `src/dfm_reviewer/reporting.py`:
 
@@ -941,13 +941,13 @@ def write_markdown_report(review: Review, reports_dir: Path) -> Path:
     return output
 ```
 
-- [ ] **Step 4: Run report tests to verify pass**
+- [x] **Step 4: Run report tests to verify pass**
 
 Run: `pytest tests/test_reporting.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 Run:
 
@@ -974,7 +974,7 @@ git commit -m "feat: generate Markdown review reports"
 - Create: `review_packs/iecex/ex_e.yaml`
 - Create: `review_packs/iecex/simple_apparatus.yaml`
 
-- [ ] **Step 1: Write failing review pack tests**
+- [x] **Step 1: Write failing review pack tests**
 
 Create `tests/test_review_packs.py`:
 
@@ -1020,13 +1020,13 @@ def test_load_review_packs_finds_nested_yaml_files(tmp_path: Path) -> None:
     assert [pack.id for pack in packs] == ["machined"]
 ```
 
-- [ ] **Step 2: Run review pack tests to verify failure**
+- [x] **Step 2: Run review pack tests to verify failure**
 
 Run: `pytest tests/test_review_packs.py -v`
 
 Expected: FAIL with missing `dfm_reviewer.review_packs`.
 
-- [ ] **Step 3: Implement review pack loader**
+- [x] **Step 3: Implement review pack loader**
 
 Create `src/dfm_reviewer/review_packs.py`:
 
@@ -1053,7 +1053,7 @@ def load_review_packs(root: Path) -> list[ReviewPack]:
     return [load_review_pack(path) for path in sorted(root.rglob("*.yaml"))]
 ```
 
-- [ ] **Step 4: Add starter pack files**
+- [x] **Step 4: Add starter pack files**
 
 Create `review_packs/manufacturing/machined.yaml`:
 
@@ -1190,13 +1190,13 @@ prompts:
   - Check evidence or reviewer rationale is captured for later certification review.
 ```
 
-- [ ] **Step 5: Run review pack tests to verify pass**
+- [x] **Step 5: Run review pack tests to verify pass**
 
 Run: `pytest tests/test_review_packs.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 Run:
 
@@ -1213,7 +1213,7 @@ git commit -m "feat: add editable review packs"
 - Create: `src/dfm_reviewer/cli.py`
 - Create: `tests/test_cli.py`
 
-- [ ] **Step 1: Write failing CLI tests**
+- [x] **Step 1: Write failing CLI tests**
 
 Create `tests/test_cli.py`:
 
@@ -1296,13 +1296,13 @@ def test_cli_report_writes_markdown(tmp_path: Path) -> None:
     assert (review_path.parent / "reports" / "mechanical-dfm-review.md").exists()
 ```
 
-- [ ] **Step 2: Run CLI tests to verify failure**
+- [x] **Step 2: Run CLI tests to verify failure**
 
 Run: `pytest tests/test_cli.py -v`
 
 Expected: FAIL with missing `dfm_reviewer.cli`.
 
-- [ ] **Step 3: Implement CLI**
+- [x] **Step 3: Implement CLI**
 
 Create `src/dfm_reviewer/cli.py`:
 
@@ -1368,13 +1368,13 @@ def report(review_yaml: Path) -> None:
     console.print(f"Wrote report: {output}")
 ```
 
-- [ ] **Step 4: Run CLI tests to verify pass**
+- [x] **Step 4: Run CLI tests to verify pass**
 
 Run: `pytest tests/test_cli.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 Run:
 
@@ -1391,7 +1391,7 @@ git commit -m "feat: add CLI review workflow"
 - Create: `src/dfm_reviewer/ai.py`
 - Create: `tests/test_ai.py`
 
-- [ ] **Step 1: Write failing AI adapter tests**
+- [x] **Step 1: Write failing AI adapter tests**
 
 Create `tests/test_ai.py`:
 
@@ -1409,13 +1409,13 @@ def test_disabled_ai_provider_returns_clear_message() -> None:
     ]
 ```
 
-- [ ] **Step 2: Run AI tests to verify failure**
+- [x] **Step 2: Run AI tests to verify failure**
 
 Run: `pytest tests/test_ai.py -v`
 
 Expected: FAIL with missing `dfm_reviewer.ai`.
 
-- [ ] **Step 3: Implement adapter protocol and disabled provider**
+- [x] **Step 3: Implement adapter protocol and disabled provider**
 
 Create `src/dfm_reviewer/ai.py`:
 
@@ -1435,13 +1435,13 @@ class DisabledAIProvider:
         ]
 ```
 
-- [ ] **Step 4: Run AI tests to verify pass**
+- [x] **Step 4: Run AI tests to verify pass**
 
 Run: `pytest tests/test_ai.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 Run:
 
@@ -1458,7 +1458,7 @@ git commit -m "feat: add AI provider boundary"
 - Create: `src/dfm_reviewer/watcher.py`
 - Create: `tests/test_watcher.py`
 
-- [ ] **Step 1: Write failing watcher tests**
+- [x] **Step 1: Write failing watcher tests**
 
 Create `tests/test_watcher.py`:
 
@@ -1481,13 +1481,13 @@ def test_find_pdf_candidates_returns_nested_pdfs_sorted(tmp_path: Path) -> None:
     assert candidates == [first, second]
 ```
 
-- [ ] **Step 2: Run watcher tests to verify failure**
+- [x] **Step 2: Run watcher tests to verify failure**
 
 Run: `pytest tests/test_watcher.py -v`
 
 Expected: FAIL with missing `dfm_reviewer.watcher`.
 
-- [ ] **Step 3: Implement watcher scan**
+- [x] **Step 3: Implement watcher scan**
 
 Create `src/dfm_reviewer/watcher.py`:
 
@@ -1499,13 +1499,13 @@ def find_pdf_candidates(root: Path) -> list[Path]:
     return sorted(path for path in root.rglob("*") if path.is_file() and path.suffix.lower() == ".pdf")
 ```
 
-- [ ] **Step 4: Run watcher tests to verify pass**
+- [x] **Step 4: Run watcher tests to verify pass**
 
 Run: `pytest tests/test_watcher.py -v`
 
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 Run:
 
@@ -1521,7 +1521,7 @@ git commit -m "feat: add PDF inbox scanner"
 **Files:**
 - Create: `src/dfm_reviewer/web.py`
 
-- [ ] **Step 1: Add a manual-run web app**
+- [x] **Step 1: Add a manual-run web app**
 
 Create `src/dfm_reviewer/web.py`:
 
@@ -1613,13 +1613,13 @@ if __name__ in {"__main__", "__mp_main__"}:
     ui.run(title="Mechanical DFM Reviewer", reload=False)
 ```
 
-- [ ] **Step 2: Manually run the web app**
+- [x] **Step 2: Manually run the web app**
 
 Run: `python -m dfm_reviewer.web`
 
 Expected: NiceGUI starts and prints a local URL.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 Run:
 
@@ -1635,19 +1635,19 @@ git commit -m "feat: add minimal NiceGUI workbench"
 **Files:**
 - Modify: `README.md`
 
-- [ ] **Step 1: Run automated tests**
+- [x] **Step 1: Run automated tests**
 
 Run: `pytest -v`
 
 Expected: all tests pass.
 
-- [ ] **Step 2: Run lint**
+- [x] **Step 2: Run lint**
 
 Run: `ruff check .`
 
 Expected: all checks pass.
 
-- [ ] **Step 3: Update README with implemented commands**
+- [x] **Step 3: Update README with implemented commands**
 
 Add this section to `README.md`:
 
@@ -1668,7 +1668,7 @@ python -m dfm_reviewer.web
 The web MVP accepts a local PDF path, creates a review package, renders pages, and generates a Markdown report.
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 Run:
 
