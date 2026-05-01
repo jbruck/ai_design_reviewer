@@ -1,14 +1,12 @@
 from pathlib import Path
 from uuid import uuid4
 
-from nicegui import app as nicegui_app
 from nicegui import ui
 
 from dfm_reviewer.models import CertificationStatus, ManufacturingRoute, Review, ReviewIntake
 from dfm_reviewer.pdf_processing import extract_page_text, render_pdf_pages
 from dfm_reviewer.reporting import write_markdown_report
 from dfm_reviewer.storage import create_review_package, save_review
-
 
 state: dict[str, object] = {"package": None, "review": None, "page_paths": []}
 
@@ -44,7 +42,9 @@ def index() -> None:
                 ui.notify(f"PDF not found: {source}", type="negative")
                 return
 
-            package = create_review_package(Path("reviews"), source, part_number.value, revision.value)
+            package = create_review_package(
+                Path("reviews"), source, part_number.value, revision.value
+            )
             page_paths = render_pdf_pages(package.source_pdf, package.pages_dir)
             page_text = extract_page_text(package.source_pdf)
             review = Review(
