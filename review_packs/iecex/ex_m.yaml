@@ -1,0 +1,8 @@
+id: ex_m
+name: Ex m Advisory Mechanical Review
+category: iecex
+prompts:
+  - Check encapsulation material, boundaries, minimum coverage, and cure requirements are clear where applicable.
+  - Check voids, trapped air, and process controls are considered for potted regions.
+  - Check inspection or process verification evidence exists for encapsulated features that cannot be inspected afterward.
+  - Check certified drawings or datasheets are requested for existing designs.

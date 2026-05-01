@@ -1,0 +1,8 @@
+id: simple_apparatus
+name: Simple Apparatus Advisory Review
+category: iecex
+prompts:
+  - Check the basis for simple apparatus treatment is recorded as an open certification/design assumption.
+  - Check marking, installation, and interface assumptions are clear where mechanically relevant.
+  - Check the drawing does not introduce stored energy, heat, or mechanical features that undermine the assumption.
+  - Check evidence or reviewer rationale is captured for later certification review.

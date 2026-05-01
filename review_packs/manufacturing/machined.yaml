@@ -1,0 +1,9 @@
+id: machined
+name: Machined Parts
+category: manufacturing
+prompts:
+  - Check material grade and specification are explicit.
+  - Check critical dimensions have tolerances suitable for the function and manufacturing method.
+  - Check datum scheme supports inspection and machining setup.
+  - Check thread callouts include size, pitch, depth, class, and standard where needed.
+  - Check surface finish callouts exist where sealing, fit, wear, or flamepath function depends on finish.

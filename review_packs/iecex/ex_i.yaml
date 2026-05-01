@@ -1,0 +1,8 @@
+id: ex_i
+name: Ex i Advisory Mechanical Review
+category: iecex
+prompts:
+  - Check segregation, barriers, spacing, and mechanical protection are clear where mechanically relevant.
+  - Check labels, terminals, cable entries, and connection interfaces match the intended intrinsically safe use.
+  - Check mechanical changes do not undermine certified creepage, clearance, or separation assumptions.
+  - Check certification evidence is requested where the design maintains an existing approved product.

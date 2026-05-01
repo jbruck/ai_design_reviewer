@@ -1,0 +1,8 @@
+id: ex_d
+name: Ex d Advisory Mechanical Review
+category: iecex
+prompts:
+  - Check flamepath-relevant dimensions, fits, lengths, and surface finishes are controlled where applicable.
+  - Check fasteners relevant to enclosure integrity are specified with grade, engagement, and retention expectations where applicable.
+  - Check marking, enclosure material, and environmental sealing notes are consistent with the certified design where applicable.
+  - Check certification drawing or certificate schedule evidence is requested for existing certified product maintenance.

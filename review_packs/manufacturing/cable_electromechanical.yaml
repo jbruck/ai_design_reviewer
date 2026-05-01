@@ -1,0 +1,9 @@
+id: cable_electromechanical
+name: Cable And Electro-Mechanical Assemblies
+category: manufacturing
+prompts:
+  - Check gland, seal, and strain relief interfaces are specified.
+  - Check cable routing, bend radius, clamp positions, and service loops are buildable.
+  - Check labels, ferrules, and identification requirements are clear.
+  - Check IP sealing and environmental interfaces are inspectable.
+  - Check assembly sequence does not trap inaccessible fasteners or terminals.

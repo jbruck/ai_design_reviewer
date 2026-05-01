@@ -71,7 +71,7 @@ Completed and reviewed:
     - `uv run --no-sync pytest` -> `17 passed`
     - `uv run --no-sync ruff check src tests` -> passed
 - Task 5 Markdown Report Generation
-  - Included in commit with this checkpoint update: `feat: add markdown report generation`
+  - `b122e18 feat: add markdown report generation`
   - Added `src/dfm_reviewer/reporting.py`.
   - Added `tests/test_reporting.py`.
   - TDD evidence:
@@ -91,6 +91,35 @@ Completed and reviewed:
     - `uv run pytest tests/test_reporting.py -v -p no:cacheprovider` -> `4 passed`
     - `uv run pytest -p no:cacheprovider` -> `19 passed`
     - `uv run ruff check .` -> passed
+- Task 6 Editable Review Packs
+  - Commit pending with this checkpoint update: `feat: add editable review packs`
+  - Added `src/dfm_reviewer/review_packs.py`.
+  - Added `tests/test_review_packs.py`.
+  - Added starter packs:
+    - `review_packs/manufacturing/machined.yaml`
+    - `review_packs/manufacturing/fabricated_welded.yaml`
+    - `review_packs/manufacturing/cast_moulded_encapsulated.yaml`
+    - `review_packs/manufacturing/cable_electromechanical.yaml`
+    - `review_packs/manufacturing/manual_assembly.yaml`
+    - `review_packs/iecex/ex_d.yaml`
+    - `review_packs/iecex/ex_m.yaml`
+    - `review_packs/iecex/ex_i.yaml`
+    - `review_packs/iecex/ex_e.yaml`
+    - `review_packs/iecex/simple_apparatus.yaml`
+  - TDD evidence:
+    - Initial red: `uv run pytest tests/test_review_packs.py -v -p no:cacheprovider` failed with `ModuleNotFoundError: No module named 'dfm_reviewer.review_packs'`.
+    - Review-driven red checks failed for malformed pack validation, blank prompts, duplicate IDs, and stable ID ordering before fixes.
+  - Implemented:
+    - `ReviewPack` Pydantic model.
+    - `load_review_pack(path)` with safe YAML loading and path-context errors.
+    - `load_review_packs(root)` with recursive YAML discovery, duplicate ID rejection, and stable ID ordering.
+    - Strict pack validation: required non-empty prompts, no extra keys, no blank ID/name/category/prompt values.
+  - Spec compliance review passed.
+  - Code quality review passed after validation and duplicate-ID fixes.
+  - Verification:
+    - `uv run pytest tests/test_review_packs.py -v -p no:cacheprovider` -> `6 passed`
+    - `uv run pytest -p no:cacheprovider` -> `27 passed`
+    - `uv run ruff check .` -> passed
 
 Partially complete:
 
@@ -98,7 +127,6 @@ Partially complete:
 
 Not started:
 
-- Task 6 Editable review packs.
 - Task 7 CLI vertical slice.
 - Task 8 AI adapter boundary.
 - Task 9 Folder watcher scaffolding.
@@ -138,6 +166,9 @@ Created/modified in worktree:
 - `src/dfm_reviewer/storage.py`
 - `src/dfm_reviewer/pdf_processing.py`
 - `src/dfm_reviewer/reporting.py`
+- `src/dfm_reviewer/review_packs.py`
+- `review_packs/manufacturing/*.yaml`
+- `review_packs/iecex/*.yaml`
 - `AGENTS.md`
 - `docs/development/agentic-development-procedure.md`
 - `docs/development/checkpoint-template.md`
@@ -147,6 +178,7 @@ Created/modified in worktree:
 - `tests/test_storage.py`
 - `tests/test_pdf_processing.py`
 - `tests/test_reporting.py`
+- `tests/test_review_packs.py`
 - `tests/.gitkeep`
 
 Relevant generated/local directories:
@@ -192,35 +224,32 @@ Relevant generated/local directories:
 - Task 4 crop-bound validation has been fixed, verified, reviewed, and committed.
 - Markdown reports normalize local paths with POSIX-style separators for Markdown portability on Windows.
 - Markdown report table cells escape pipe/newline content; extracted text uses dynamic code fences.
+- Review packs are editable YAML files and intentionally advisory. They are validated on load to catch typo-driven data loss before review use.
 
 ## 6. Remaining Plan
 
-1. Task 6: Editable review packs.
-   - Add `src/dfm_reviewer/review_packs.py`.
-   - Add starter YAML packs under `review_packs/manufacturing/` and `review_packs/iecex/`.
-   - Add tests, commit, review gates.
-2. Task 7: CLI vertical slice.
+1. Task 7: CLI vertical slice.
    - Replace/extend CLI stub.
    - Create review from PDF, render pages, extract text, save review, generate report.
    - Add CLI tests, commit, review gates.
-3. Task 8: AI adapter boundary.
+2. Task 8: AI adapter boundary.
    - Add `src/dfm_reviewer/ai.py`.
    - Add disabled provider test.
    - Commit, review gates.
-4. Task 9: Folder watcher inbox scaffolding.
+3. Task 9: Folder watcher inbox scaffolding.
    - Add `src/dfm_reviewer/watcher.py`.
    - Add tests for recursive PDF discovery.
    - Commit, review gates.
-5. Task 10: Minimal NiceGUI web app.
+4. Task 10: Minimal NiceGUI web app.
    - Replace/extend web stub.
    - Path input, intake fields, create review, render pages, generate report.
    - Manual run check.
    - Commit, review gates.
-6. Task 11: Full verification.
+5. Task 11: Full verification.
    - Run full tests and ruff.
    - Update README with final MVP commands.
    - Commit.
-7. Final full review and completion/merge guidance.
+6. Final full review and completion/merge guidance.
 
 ## 7. Next Action
 
@@ -228,11 +257,11 @@ Run this in the implementation worktree:
 
 ```powershell
 cd C:\Users\jonathan.b\ai\ai_design_reviewer\.worktrees\mvp
-git add src/dfm_reviewer/reporting.py tests/test_reporting.py docs/superpowers/checkpoints/2026-04-29-mechanical-dfm-reviewer-mvp-checkpoint.md
-git commit -m "feat: add markdown report generation"
+git add src/dfm_reviewer/review_packs.py tests/test_review_packs.py review_packs docs/superpowers/checkpoints/2026-04-29-mechanical-dfm-reviewer-mvp-checkpoint.md
+git commit -m "feat: add editable review packs"
 ```
 
-After that, start Task 6 from the implementation plan.
+After that, start Task 7 from the implementation plan.
 
 ## 8. Risks And Uncertainties
 
@@ -244,3 +273,4 @@ After that, start Task 6 from the implementation plan.
 - No real OCR implemented yet; Task 4 only handles embedded text.
 - Task 5 records OCR status explicitly, but no separate OCR engine has been implemented.
 - Markdown report prose fields outside tables intentionally remain normal Markdown; arbitrary extracted text in non-code/non-table prose could affect presentation if future fields are added without formatting helpers.
+- Review pack IDs and categories are validated as non-blank strings, but categories are not an enum yet. Current starter-pack tests enforce the MVP categories.

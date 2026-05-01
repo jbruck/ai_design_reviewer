@@ -1,0 +1,9 @@
+id: manual_assembly
+name: Manual Assembly And Work Instructions
+category: manufacturing
+prompts:
+  - Check sequence supports safe and repeatable assembly.
+  - Check tooling, torque, adhesive, cure, and inspection points are explicit.
+  - Check orientation-sensitive parts have clear visual cues.
+  - Check acceptance criteria are measurable by the assembler or inspector.
+  - Check rework and service access are considered where relevant.

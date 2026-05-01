@@ -1,0 +1,9 @@
+id: cast_moulded_encapsulated
+name: Cast, Moulded, And Encapsulated Parts
+category: manufacturing
+prompts:
+  - Check draft, wall thickness, corner radii, and transitions are suitable for the selected process.
+  - Check critical machined-after-cast features are identified.
+  - Check encapsulation boundaries and keep-out regions are clear where applicable.
+  - Check material, compound, cure, and environmental requirements are explicit where applicable.
+  - Check inspection access exists for critical embedded or sealed features.

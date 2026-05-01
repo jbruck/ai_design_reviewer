@@ -1,0 +1,9 @@
+id: fabricated_welded
+name: Fabricated And Welded Parts
+category: manufacturing
+prompts:
+  - Check weld symbols define size, type, extent, and acceptance expectations.
+  - Check bend, cut, and formed features are manufacturable from the selected material thickness.
+  - Check distortion-sensitive features have inspection or post-weld machining requirements.
+  - Check coating access, drain paths, and masking requirements are clear.
+  - Check datum scheme remains usable after fabrication.

@@ -1,0 +1,8 @@
+id: ex_e
+name: Ex e Advisory Mechanical Review
+category: iecex
+prompts:
+  - Check terminal, enclosure, sealing, and mechanical retention details are controlled where applicable.
+  - Check creepage, clearance, and tracking-related mechanical features are not obscured by drawing ambiguity.
+  - Check ingress protection and environmental sealing details are inspectable.
+  - Check certification drawing or approval evidence is requested for existing certified designs.
