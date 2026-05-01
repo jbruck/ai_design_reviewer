@@ -99,6 +99,15 @@ The preferred orchestration is:
 - Small commits.
 - Checkpoint updates when state changes materially.
 
+When subagents are available, prefer an orchestrator-worker model:
+
+- The top-level agent acts as orchestrator and should use the strongest practical model. It owns sequencing, task boundaries, checkpoint updates, verification, review gates, and git hygiene.
+- Worker subagents should usually use a lower-token model and receive narrow, self-contained implementation prompts with explicit file ownership, expected tests, and a clear final report format.
+- Reviewer subagents should be read-only and narrowly scoped to either spec compliance or code quality.
+- Parallel worker subagents are only appropriate when their write sets and behavioral surfaces are disjoint.
+- The orchestrator must not accept subagent success claims without inspecting the diff and running the relevant local verification commands.
+- Subagent prompts should not ask workers to "continue the project" or interpret the whole plan. The orchestrator extracts the next bounded task and gives the worker only the context needed for that task.
+
 This can be performed by:
 
 - One agent working inline.

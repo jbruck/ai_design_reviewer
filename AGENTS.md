@@ -65,6 +65,15 @@ The project config disables pytest's cache provider. Tests override pytest's bui
 
 Work task-by-task from the MVP implementation plan.
 
+Preferred AI operating model:
+
+- Use a strong top-level orchestrator agent to keep the plan, checkpoint, review gates, verification, and git scope under control.
+- Use lower-token worker subagents for narrow implementation tasks with explicit file ownership and expected tests.
+- Use reviewer subagents for read-only spec compliance and code-quality reviews.
+- Keep subagent prompts self-contained and narrow. Avoid broad prompts such as "continue the MVP".
+- Do not run parallel worker subagents against the same files or shared behavior unless the write scopes are clearly disjoint.
+- The orchestrator must inspect diffs and run verification locally before committing, even when a subagent reports success.
+
 For each task:
 
 1. Write or update tests first.
