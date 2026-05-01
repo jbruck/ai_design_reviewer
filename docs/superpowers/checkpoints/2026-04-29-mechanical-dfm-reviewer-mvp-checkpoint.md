@@ -40,13 +40,13 @@ Completed and reviewed:
 - Task 1 Project Skeleton
 - Task 2 Core Review Models
 - Task 3 Review Package Storage
-- Task 4 PDF Rendering/Text/Cropping (Implementation complete, pending review)
-- Task 5 Markdown report generation (Implementation complete)
-- Task 6 Editable review packs (Implementation complete)
+- Task 4 PDF Rendering/Text/Cropping
+- Task 5 Markdown report generation
+- Task 6 Editable review packs
+- Task 7 CLI vertical slice (Implementation complete)
 
 Not started:
 
-- Task 7 CLI vertical slice.
 - Task 8 AI adapter boundary.
 - Task 9 Folder watcher scaffolding.
 - Task 10 Minimal NiceGUI web app.
@@ -76,10 +76,10 @@ Created/modified in worktree:
 
 - `.gitignore`
 - `README.md`
-- `pyproject.toml`
+- `pyproject.toml` (Updated ruff config)
 - `uv.lock`
-- `src/dfm_reviewer/`
-- `tests/`
+- `src/dfm_reviewer/cli.py` (Implemented)
+- `tests/test_cli.py` (Implemented)
 
 ## 4. Environment
 
@@ -93,25 +93,23 @@ Created/modified in worktree:
 ## 5. Decisions And Assumptions
 
 - Use project-local `uv` environment.
-- Use `uv run ...` commands for tests/lint/CLI.
+- Use `uv run --no-sync ...` commands for tests/lint/CLI where appropriate.
 - Use `-p no:cacheprovider` for pytest where helpful.
-- Keep implementation MVP-first.
-- OpenAI is the initial AI provider, behind an adapter boundary.
+- Typer CLI commands `create` and `report` are the primary vertical slice.
+- Ignore ruff B008 for Typer compatibility in `cli.py`.
 
 ## 6. Remaining Plan
 
-1. Finish Task 4-6 review gates (Spec compliance and Code quality).
-2. Task 7: CLI vertical slice.
-3. Task 8: AI adapter boundary.
-4. Task 9: Folder watcher scaffolding.
-5. Task 10: Minimal NiceGUI web app.
-6. Task 11: Full verification.
+1. Task 8: AI adapter boundary.
+2. Task 9: Folder watcher scaffolding.
+3. Task 10: Minimal NiceGUI web app.
+4. Task 11: Full verification.
 
 ## 7. Next Action
 
-Perform review gates for Tasks 4, 5, and 6.
+Task 8: Implement AI adapter boundary and DisabledAIProvider.
 
 ## 8. Risks And Uncertainties
 
-- CLI and Web app are still stubs.
+- Web app is still a stub.
 - AI adapter logic is not yet implemented.
